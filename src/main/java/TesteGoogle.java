@@ -1,12 +1,15 @@
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class TesteGoogle {
 	
-	public static void main(String[] args) {
+	@Test
+	public void teste() {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://www.google.com.br/");
-		System.out.println(driver.getTitle());
+		Assert.assertEquals("Googles", driver.getTitle());
 	}
 }
