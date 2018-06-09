@@ -10,6 +10,7 @@ public class TesteGoogle {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.get("https://www.google.com.br/");
-		Assert.assertEquals("Googles", driver.getTitle());
+		Assert.assertEquals("Google", driver.getTitle());
+		//teste
 	}
 }
