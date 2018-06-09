@@ -11,8 +11,8 @@ public class TesteGoogle {
 	public void teste() {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
-		//o comando setSize serve para especificar tamanho e altura
-		driver.manage().window().setSize(new Dimension(1200, 765));
+		// maximize serve para abrir a pagina ja maximizada
+		driver.manage().window().maximize();
 		driver.get("https://www.google.com.br/");
 		Assert.assertEquals("Google", driver.getTitle());
 		
