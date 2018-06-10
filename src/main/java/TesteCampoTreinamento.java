@@ -61,6 +61,7 @@ public class TesteCampoTreinamento {
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
 		Select combo = new Select(element);
 		combo.selectByVisibleText("Doutorado");
+		Assert.assertEquals("Doutorado", combo.getFirstSelectedOption().getText());
 		
 //		driver.quit();
 		
