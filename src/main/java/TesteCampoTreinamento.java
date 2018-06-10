@@ -119,7 +119,10 @@ public class TesteCampoTreinamento {
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-		driver.findElement(By.id("buttonSimple")).click();
+		WebElement botao = driver.findElement(By.id("buttonSimple"));
+		botao.click();
+		
+		Assert.assertEquals("Obrigado!", botao.getAttribute("value"));
 		
 	}
 	
