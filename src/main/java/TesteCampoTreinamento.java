@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -62,6 +66,20 @@ public class TesteCampoTreinamento {
 		Select combo = new Select(element);
 		combo.selectByVisibleText("Doutorado");
 		Assert.assertEquals("Doutorado", combo.getFirstSelectedOption().getText());
+		
+//		driver.quit();
+		
+	}
+	@Test
+	public void deveVerificarValoresCombo() {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
+		Select combo = new Select(element);
+		List<WebElement> options = combo.getOptions();
+		Assert.assertEquals(8, options.size());
 		
 //		driver.quit();
 		
