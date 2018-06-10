@@ -4,7 +4,6 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Sleeper;
 
 public class TestAlert {
 
@@ -40,6 +39,26 @@ public class TestAlert {
 		Thread.sleep(2000);
 		alert.accept();
 		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
+		Thread.sleep(2000);
+		driver.quit();
+	}
+	
+	@Test
+	public void deveInteragirComPrompt() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		driver.findElement(By.id("prompt")).click();
+		
+		Alert alerta = driver.switchTo().alert();
+		Assert.assertEquals("Digite um numero", alerta.getText());
+		alerta.sendKeys("12");
+		alerta.accept();
+		Assert.assertEquals("Era 12?", alerta.getText());
+		alerta.accept();
+		alerta.accept();
+		
 		Thread.sleep(2000);
 		driver.quit();
 	}
