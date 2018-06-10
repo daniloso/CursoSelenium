@@ -144,8 +144,7 @@ public class TesteCampoTreinamento {
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-		driver.findElement(By.tagName("body")).getText();
-		Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
+		Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
 		Thread.sleep(5000);
 		driver.quit();
 	}
