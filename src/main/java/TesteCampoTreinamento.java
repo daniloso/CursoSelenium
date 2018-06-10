@@ -133,6 +133,6 @@ public class TesteCampoTreinamento {
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.linkText("Voltar")).click();
-				
+		Assert.fail();	
 	}
 }
