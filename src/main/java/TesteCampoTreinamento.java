@@ -91,7 +91,7 @@ public class TesteCampoTreinamento {
 		
 	}
 	@Test
-	public void deveVerificarValoresComboMultiplo() {
+	public void deveVerificarValoresComboMultiplo() throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
@@ -105,6 +105,10 @@ public class TesteCampoTreinamento {
 		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
 		Assert.assertEquals(3, allSelectedOptions.size());
 		
+		combo.deselectByVisibleText("Corrida");
+		allSelectedOptions = combo.getAllSelectedOptions();
+		Assert.assertEquals(2, allSelectedOptions.size());
+		Thread.sleep(5000);
 		driver.quit();
 		
 	}
