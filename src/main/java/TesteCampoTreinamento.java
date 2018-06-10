@@ -1,8 +1,8 @@
 import org.junit.Assert;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver.SystemProperty;
 
 public class TesteCampoTreinamento {
 	@Test
@@ -11,6 +11,9 @@ public class TesteCampoTreinamento {
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo Oliveira");
+		Assert.assertEquals("Danilo Oliveira", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
+		
 //		driver.getTitle();
 		
 	}
