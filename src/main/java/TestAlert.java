@@ -36,7 +36,8 @@ public class TestAlert {
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Confirm Simples", alert.getText());
 		String texto = alert.getText();
-		alert.accept();
+		alert.dismiss();
+		Thread.sleep(2000);
 		alert.accept();
 		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
 		Thread.sleep(2000);
