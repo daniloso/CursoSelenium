@@ -14,7 +14,7 @@ public class TesteCampoTreinamento {
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo Oliveira");
 		Assert.assertEquals("Danilo Oliveira", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 		
-		driver.getTitle();
+//		driver.getTitle();
 		
 	}
 	@Test
@@ -35,7 +35,18 @@ public class TesteCampoTreinamento {
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
-		driver.quit();
+//		driver.quit();
+		
+	}
+	@Test
+	public void deveInteragirComCheckbox() {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
+		Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
+//		driver.quit();
 		
 	}
 }
