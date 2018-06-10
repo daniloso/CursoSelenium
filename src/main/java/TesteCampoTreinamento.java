@@ -145,6 +145,9 @@ public class TesteCampoTreinamento {
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
+
+		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", driver.findElement(By.tagName("span")).getText());
+		
 		Thread.sleep(5000);
 		driver.quit();
 	}
