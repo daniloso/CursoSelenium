@@ -137,4 +137,16 @@ public class TesteCampoTreinamento {
 		driver.findElement(By.linkText("Voltar")).click();
 			
 	}
+	
+	@Test
+	public void deveBuscarTestosNaPagina() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		driver.findElement(By.tagName("body")).getText();
+		Assert.assertTrue(driver.findElement(By.tagName("body")).getText().contains("Campo de Treinamento"));
+		Thread.sleep(5000);
+		driver.quit();
+	}
 }
