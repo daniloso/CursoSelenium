@@ -64,6 +64,7 @@ public class TestAlert {
 		Thread.sleep(2000);
 		driver.quit();
 	}
+	
 	@Test
 	public void desafioCadastroComSucesso() throws InterruptedException {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
@@ -88,6 +89,7 @@ public class TestAlert {
 				"The aim of Token Druid is to use a combinations of small minions, spawns, and buff cards together to create extremely powerful turns and solid board states.\r\n" + 
 				"");
 		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		Assert.assertTrue(driver.findElement(By.id("resultado")).getText().startsWith("Cadastrado!"));
 		Assert.assertEquals("Nome: Danilo", driver.findElement(By.id("descNome")).getText());
 		Assert.assertEquals("Sobrenome: Oliveira", driver.findElement(By.id("descSobrenome")).getText());
 		Assert.assertEquals("Sexo: Masculino", driver.findElement(By.id("descSexo")).getText());
@@ -96,5 +98,7 @@ public class TestAlert {
 		Assert.assertEquals("Esportes: Karate", driver.findElement(By.id("descEsportes")).getText());
 		Assert.assertEquals("Sugestoes: Archetype Explanation The aim of Token Druid is to use a combinations of small minions, spawns, and buff cards together to create extremely powerful turns and solid board states.", driver.findElement(By.id("descSugestoes")).getText());
 		driver.findElement(By.id("descEsportes")).click();	
+		Thread.sleep(2000);
+		driver.quit();
 	}
 }
