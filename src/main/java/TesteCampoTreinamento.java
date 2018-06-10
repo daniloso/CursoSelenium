@@ -1,6 +1,3 @@
-import static org.junit.Assert.assertEquals;
-
-import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -104,6 +101,11 @@ public class TesteCampoTreinamento {
 		combo.selectByVisibleText("Natacao");
 		combo.selectByVisibleText("Corrida");
 		combo.selectByVisibleText("Karate");
+		
+		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
+		Assert.assertEquals(3, allSelectedOptions.size());
+		
+		driver.quit();
 		
 	}
 }
