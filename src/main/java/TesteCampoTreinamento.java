@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.junit.Assert;
@@ -81,6 +82,14 @@ public class TesteCampoTreinamento {
 		List<WebElement> options = combo.getOptions();
 		Assert.assertEquals(8, options.size());
 		
+		boolean encontrou = false;
+		for (WebElement option : options) {
+			if(option.getText().equals("Mestrado")) {
+				encontrou = true;
+				break;
+			}
+		}
+		Assert.assertTrue(encontrou);
 //		driver.quit();
 		
 	}
