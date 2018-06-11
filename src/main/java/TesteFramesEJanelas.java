@@ -3,7 +3,9 @@ import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 
 
 public class TesteFramesEJanelas {
@@ -65,5 +67,19 @@ public class TesteFramesEJanelas {
 		
 		Thread.sleep(2000);
 		driver.quit();
+	}
+	
+	@Test
+	public void desafioTestarRNNome() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
+		alert.accept();
 	}
 }
