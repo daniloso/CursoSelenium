@@ -101,4 +101,71 @@ public class TesteFramesEJanelas {
 		Thread.sleep(2000);
 		driver.quit();
 	}
+	
+	@Test
+	public void desafioTestarRNSexo() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
+		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
+		
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+	
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
+		alert.accept();
+		Thread.sleep(2000);
+		driver.quit();
+	}
+	
+	@Test
+	public void desafioTestarRNComidaFavorita() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
+		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
+		driver.findElement(By.id("elementosForm:sexo:0")).click();
+		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+		driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
+		
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+	
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
+		Thread.sleep(2000);
+		alert.accept();
+		driver.quit();
+	}
+	
+	@Test
+	public void desafioTestarRNEsportes() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		
+		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
+		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
+		driver.findElement(By.id("elementosForm:sexo:0")).click();
+		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
+		
+		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
+		Select comboEsporte = new Select(element);
+		comboEsporte.selectByVisibleText("Futebol");
+		comboEsporte.selectByVisibleText("O que eh esporte?");
+		
+		driver.findElement(By.id("elementosForm:cadastrar")).click();
+	
+		Alert alert = driver.switchTo().alert();
+		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
+		Thread.sleep(2000);
+		alert.accept();
+		driver.quit();
+	}
 }
