@@ -43,4 +43,27 @@ public class TesteFramesEJanelas {
 		Thread.sleep(2000);
 		driver.quit();
 	}
+	
+	@Test
+	public void deveInteragirJanelasSemTitulo() throws InterruptedException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	
+		driver.findElement(By.id("buttonPopUpHard")).click();
+		//Janela corrente (como se fosse o id da janela
+		System.out.println(driver.getWindowHandle());
+		//Aqui corresponde a todas as janelas (atual e popup)
+		System.out.println(driver.getWindowHandles());
+		
+		driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
+		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
+		Thread.sleep(2000);
+		driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
+		driver.findElement(By.tagName("textarea")).sendKeys("E agora");
+		
+		Thread.sleep(2000);
+		driver.quit();
+	}
 }
