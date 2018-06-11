@@ -1,4 +1,6 @@
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -8,30 +10,35 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class TestAlert {
+	
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa() {
+		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}	
+	@After
+	public void finaliza() throws InterruptedException {
+		Thread.sleep(2000);
+		driver.quit();
+	}
 
 	@Test
 	public void deveInteragirComAlertSimples() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("alert")).click();
 		
 		Alert alert = driver.switchTo().alert();
 		Assert.assertEquals("Alert Simples", alert.getText());
 		String texto = alert.getText();
 		alert.accept();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
-		Thread.sleep(2000);
-		driver.quit();
+		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);	
 	}
 	
 	@Test
 	public void deveInteragirComAlertConfirm() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("confirm")).click();
 		
 		Alert alert = driver.switchTo().alert();
@@ -40,17 +47,11 @@ public class TestAlert {
 		alert.dismiss();
 		Thread.sleep(2000);
 		alert.accept();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);
-		Thread.sleep(2000);
-		driver.quit();
+		driver.findElement(By.id("elementosForm:nome")).sendKeys(texto);		
 	}
 	
 	@Test
 	public void deveInteragirComPrompt() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("prompt")).click();
 		
 		Alert alerta = driver.switchTo().alert();
@@ -60,18 +61,11 @@ public class TestAlert {
 		Assert.assertEquals("Era 12?", alerta.getText());
 		alerta.accept();
 		alerta.accept();
-		
-		Thread.sleep(2000);
-		driver.quit();
+
 	}
 	
 	@Test
 	public void desafioCadastroComSucesso() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
-		
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
 		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
@@ -97,8 +91,6 @@ public class TestAlert {
 		Assert.assertEquals("Escolaridade: mestrado", driver.findElement(By.id("descEscolaridade")).getText());
 		Assert.assertEquals("Esportes: Karate", driver.findElement(By.id("descEsportes")).getText());
 		Assert.assertEquals("Sugestoes: Archetype Explanation The aim of Token Druid is to use a combinations of small minions, spawns, and buff cards together to create extremely powerful turns and solid board states.", driver.findElement(By.id("descSugestoes")).getText());
-		driver.findElement(By.id("descEsportes")).click();	
-		Thread.sleep(2000);
-		driver.quit();
+		driver.findElement(By.id("descEsportes")).click();			
 	}
 }

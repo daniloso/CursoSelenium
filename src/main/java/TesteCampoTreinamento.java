@@ -1,6 +1,8 @@
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -10,71 +12,58 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 public class TesteCampoTreinamento {
-	@Test
-	public void teste() {
+	
+	private WebDriver driver;
+	
+	@Before
+	public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+	}	
+	@After
+	public void finaliza() throws InterruptedException {
+		Thread.sleep(2000);
+		driver.quit();
+	}
+	
+	
+	@Test
+	public void teste() {
 		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo Oliveira");
 		Assert.assertEquals("Danilo Oliveira", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 		
-//		driver.getTitle();
-		
 	}
+	
 	@Test
 	public void deveInteragirComTextArea() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:sugestoes")).sendKeys("teste\n\fadsfasdfasdasdfasdfasdfasdfa\n\fsdfasdfasdfasd");
 //		Assert.assertEquals("Danilo Oliveira", driver.findElement(By.id("elementosForm:nome")).getAttribute("value"));
 	}
 	
 	@Test
 	public void deveInteragirComRadioButton() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:sexo:0")).click();
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:sexo:0")).isSelected());
-//		driver.quit();
-		
 	}
+	
 	@Test
 	public void deveInteragirComCheckbox() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.id("elementosForm:comidaFavorita:2")).click();
 		Assert.assertTrue(driver.findElement(By.id("elementosForm:comidaFavorita:2")).isSelected());
-//		driver.quit();
-		
 	}
 	
 	@Test
 	public void deveInteragirComCombo() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
 		Select combo = new Select(element);
 		combo.selectByVisibleText("Doutorado");
 		Assert.assertEquals("Doutorado", combo.getFirstSelectedOption().getText());
-		
-//		driver.quit();
-		
 	}
+	
 	@Test
 	public void deveVerificarValoresCombo() {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		WebElement element = driver.findElement(By.id("elementosForm:escolaridade"));
 		Select combo = new Select(element);
 		List<WebElement> options = combo.getOptions();
@@ -88,15 +77,10 @@ public class TesteCampoTreinamento {
 			}
 		}
 		Assert.assertTrue(encontrou);
-//		driver.quit();
-		
 	}
+	
 	@Test
 	public void deveVerificarValoresComboMultiplo() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
 		Select combo = new Select(element);
 		combo.selectByVisibleText("Natacao");
@@ -116,10 +100,6 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComBotoes() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		WebElement botao = driver.findElement(By.id("buttonSimple"));
 		botao.click();
 		
@@ -129,28 +109,13 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void deveInteragirComLinks() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		driver.findElement(By.linkText("Voltar")).click();
-		
-		Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());
-		
-		driver.quit();
+		Assert.assertEquals("Voltou!", driver.findElement(By.id("resultado")).getText());	
 	}
 	
 	@Test
 	public void deveBuscarTestosNaPagina() throws InterruptedException {
-		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
-		WebDriver driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		Assert.assertEquals("Campo de Treinamento", driver.findElement(By.tagName("h3")).getText());
-
 		Assert.assertEquals("Cuidado onde clica, muitas armadilhas...", driver.findElement(By.className("facilAchar")).getText());
-		
-		Thread.sleep(5000);
-		driver.quit();
 	}
 }
