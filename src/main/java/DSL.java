@@ -63,8 +63,9 @@ public class DSL {
 	
 	/********* Botao ************/
 	
-	public void clicarBotao(String id) {
+	public void clicarBotao(String id) throws InterruptedException {
 		driver.findElement(By.id(id)).click();
+		Thread.sleep(2000);
 	}
 	
 	public String obterValueElemento(String id) {
@@ -114,5 +115,19 @@ public class DSL {
 		Alert alert = driver.switchTo().alert();
 		alert.sendKeys(texto);
 		alert.accept();
+	}
+	
+	/********* Frames e Janelas ************/
+	
+	public void entrarFrame(String id) {
+		driver.switchTo().frame(id);
+	}
+	
+	public void sairFrame() {
+		driver.switchTo().defaultContent();
+	}
+	
+	public void trocarJanela(String id) {
+		driver.switchTo().window(id);
 	}
 }

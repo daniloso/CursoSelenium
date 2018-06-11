@@ -13,13 +13,15 @@ import org.openqa.selenium.support.ui.Select;
 public class TesteFramesEJanelas {
 	
 private WebDriver driver;
-	
+private DSL dsl;	
+
 	@Before
 	public void inicializa() {
 		System.setProperty("webdriver.chrome.driver", "C:\\Drivers\\chromedriver.exe");
 		driver = new ChromeDriver();
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
+		dsl = new DSL(driver);
 	}	
 	@After
 	public void finaliza() throws InterruptedException {
@@ -29,108 +31,90 @@ private WebDriver driver;
 	
 	@Test
 	public void deveInteragirComFrames() throws InterruptedException {
-		driver.switchTo().frame("frame1");
-		driver.findElement(By.id("frameButton")).click();
-		Alert alert = driver.switchTo().alert();
-		String msg = alert.getText();
+		dsl.entrarFrame("frame1");
+		dsl.clicarBotao("frameButton");
+		String msg = dsl.alertaObterTextoEAceita();
 		Assert.assertEquals("Frame OK!", msg);
-		alert.accept();
-		
-		driver.switchTo().defaultContent();
-		driver.findElement(By.id("elementosForm:nome")).sendKeys(msg);
-		
+		dsl.sairFrame();
+		dsl.escrever("elementosForm:nome", msg);			
 	}
 	
 	@Test
 	public void deveInteragirJanelas() throws InterruptedException {
-		driver.findElement(By.id("buttonPopUpEasy")).click();
-		driver.switchTo().window("Popup");
-		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo");
+		dsl.clicarBotao("buttonPopUpEasy");
+		dsl.trocarJanela("Popup");
+		dsl.escrever(By.tagName("textarea"), "Deu certo");
 		Thread.sleep(2000);
 		driver.close();
 		driver.switchTo().window("");
-		driver.findElement(By.tagName("textarea")).sendKeys("e agora");
+		dsl.escrever(By.tagName("textarea"), "e agora");		
 	}
 	
 	@Test
 	public void deveInteragirJanelasSemTitulo() throws InterruptedException {
-		driver.findElement(By.id("buttonPopUpHard")).click();
+		dsl.clicarBotao("buttonPopUpHard");
 		//Janela corrente (como se fosse o id da janela
 		System.out.println(driver.getWindowHandle());
 		//Aqui corresponde a todas as janelas (atual e popup)
 		System.out.println(driver.getWindowHandles());
-		
-		driver.switchTo().window((String) driver.getWindowHandles().toArray()[1]);
-		driver.findElement(By.tagName("textarea")).sendKeys("Deu certo?");
+		dsl.trocarJanela((String)driver.getWindowHandles().toArray()[1]);
+		dsl.escrever(By.tagName("textarea"), "Deu certo?");
 		Thread.sleep(2000);
-		driver.switchTo().window((String) driver.getWindowHandles().toArray()[0]);
-		driver.findElement(By.tagName("textarea")).sendKeys("E agora");
+		dsl.trocarJanela((String) driver.getWindowHandles().toArray()[0]);
+		dsl.escrever(By.tagName("textarea"), "E agora");		
 	}
 	
 	@Test
 	public void desafioTestarRNNome() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
-		
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Nome eh obrigatorio", alert.getText());
-		alert.accept();
+		dsl.clicarBotao("elementosForm:cadastrar");
+		String msg = dsl.alertaObterTextoEAceita();		
+		Assert.assertEquals("Nome eh obrigatorio", msg);		
 	}
 	
 	@Test
 	public void desafioTestarRNSobrenome() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
-		
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Sobrenome eh obrigatorio", alert.getText());
-		alert.accept();
+		dsl.escrever("elementosForm:nome", "Danilo");
+		dsl.clicarBotao("elementosForm:cadastrar");		
+		String msg = dsl.alertaObterTextoEAceita();		
+		Assert.assertEquals("Sobrenome eh obrigatorio", msg);
 	}
 	
 	@Test
 	public void desafioTestarRNSexo() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
-		
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
-	
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Sexo eh obrigatorio", alert.getText());
-		alert.accept();
+		dsl.escrever("elementosForm:nome", "Danilo");
+		dsl.escrever("elementosForm:sobrenome", "Oliveira");
+		dsl.clicarBotao("elementosForm:cadastrar");		
+		String msg = dsl.alertaObterTextoEAceita();	
+		Assert.assertEquals("Sexo eh obrigatorio", msg);		
 	}
 	
 	@Test
 	public void desafioTestarRNComidaFavorita() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:3")).click();
-		
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escrever("elementosForm:nome", "Danilo");
+		dsl.escrever("elementosForm:sobrenome", "Oliveira");
+		dsl.radioButton("elementosForm:sexo:0");
+		dsl.clicarCheck("elementosForm:comidaFavorita:0");
+		dsl.clicarCheck("elementosForm:comidaFavorita:3");
+				
+		dsl.clicarBotao("elementosForm:cadastrar");
 	
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Tem certeza que voce eh vegetariano?", alert.getText());
-		Thread.sleep(2000);
-		alert.accept();		
+		String msg = dsl.alertaObterTextoEAceita();
+		Assert.assertEquals("Tem certeza que voce eh vegetariano?", msg);		
 	}
 	
 	@Test
 	public void desafioTestarRNEsportes() throws InterruptedException {
-		driver.findElement(By.id("elementosForm:nome")).sendKeys("Danilo");
-		driver.findElement(By.id("elementosForm:sobrenome")).sendKeys("Oliveira");
-		driver.findElement(By.id("elementosForm:sexo:0")).click();
-		driver.findElement(By.id("elementosForm:comidaFavorita:0")).click();
-		
-		WebElement element = driver.findElement(By.id("elementosForm:esportes"));
-		Select comboEsporte = new Select(element);
-		comboEsporte.selectByVisibleText("Futebol");
-		comboEsporte.selectByVisibleText("O que eh esporte?");
-		
-		driver.findElement(By.id("elementosForm:cadastrar")).click();
+		dsl.escrever("elementosForm:nome", "Danilo");
+		dsl.escrever("elementosForm:sobrenome", "Oliveira");
+		dsl.radioButton("elementosForm:sexo:0");
+		dsl.clicarCheck("elementosForm:comidaFavorita:0");
+		dsl.selecionarCombo("elementosForm:esportes", "Futebol");
+		dsl.selecionarCombo("elementosForm:esportes", "Futebol");
+		dsl.selecionarCombo("elementosForm:esportes", "O que eh esporte?");
+				
+		dsl.clicarBotao("elementosForm:cadastrar");
 	
-		Alert alert = driver.switchTo().alert();
-		Assert.assertEquals("Voce faz esporte ou nao?", alert.getText());
-		Thread.sleep(2000);
-		alert.accept();	
+		String msg = dsl.alertaObterTextoEAceita();
+		Assert.assertEquals("Voce faz esporte ou nao?", msg);
 	}
 }
