@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Assert;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -16,6 +19,7 @@ public class DSL {
 	/********* TextField e TextArea ************/
 	
 	public void escrever(By by, String texto){
+		driver.findElement(by).clear();
 		driver.findElement(by).sendKeys(texto);
 	}
 	
@@ -59,6 +63,43 @@ public class DSL {
 		WebElement element = driver.findElement(By.id(id));
 		Select combo = new Select(element);
 		return combo.getFirstSelectedOption().getText();
+	}
+	
+	public List<String> obterValoresCombo(String id) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		List<WebElement> allSelectedOptions = combo.getAllSelectedOptions();
+		List<String> valores = new ArrayList<String>();
+		for (WebElement	opcao : allSelectedOptions) {
+			valores.add(opcao.getText());
+		}
+		return valores;
+	}
+	
+	public boolean verificarOpcaoCombo (String id, String opcao) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		List<WebElement> options = combo.getOptions();
+		
+		for (WebElement option : options) {
+			if(option.getText().equals(opcao)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public int obterQuantidadeOpcoesCombo(String id) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		List<WebElement> options = combo.getOptions();
+		return options.size();
+	}
+
+	public void deselecionarCombo(String id, String valor) {
+		WebElement element = driver.findElement(By.id(id));
+		Select combo = new Select(element);
+		combo.deselectByVisibleText(valor);
 	}
 	
 	/********* Botao ************/
@@ -130,4 +171,6 @@ public class DSL {
 	public void trocarJanela(String id) {
 		driver.switchTo().window(id);
 	}
+
+	
 }
