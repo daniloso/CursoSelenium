@@ -16,6 +16,7 @@ public class TesteCampoTreinamento {
 	
 	private WebDriver driver;
 	private DSL dsl;
+	private CampoTreinamentoPage page;
 	
 	@Before
 	public void inicializa() {
@@ -24,6 +25,7 @@ public class TesteCampoTreinamento {
 		driver.manage().window().maximize();
 		driver.get("file:///" + System.getProperty("user.dir") + "/src/main/resources/componentes.html");
 		dsl = new DSL(driver);
+		page = new CampoTreinamentoPage(driver);
 	}	
 	@After
 	public void finaliza() throws InterruptedException {
@@ -34,7 +36,8 @@ public class TesteCampoTreinamento {
 	
 	@Test
 	public void teste() {
-		dsl.escrever("elementosForm:nome", "Danilo Oliveira");
+		page.setNome("Danilo Oliveira");
+//		dsl.escrever("elementosForm:nome", "Danilo Oliveira");
 		Assert.assertEquals("Danilo Oliveira", dsl.obterValorCampo("elementosForm:nome"));
 		
 	}
